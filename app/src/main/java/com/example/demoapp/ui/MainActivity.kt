@@ -17,7 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels()
+    @Inject lateinit var mainViewModel: MainViewModel
 
     @Inject lateinit var adapter: EmployeeAdapter
 

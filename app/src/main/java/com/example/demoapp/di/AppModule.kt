@@ -1,15 +1,18 @@
 package com.example.demoapp.di
 
+import android.content.Context
 import com.example.demoapp.BuildConfig
 //import com.example.demoapp.api.ApiHelper
 //import com.example.demoapp.api.ApiHelperImpl
 import com.example.demoapp.api.ApiService
 import com.example.demoapp.other.Constants
+import com.example.demoapp.repository.MainRepository
 import com.example.demoapp.ui.EmployeeAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -62,4 +65,16 @@ object AppModule{
     @Provides
     @Singleton
     fun provideAdapter(): EmployeeAdapter = EmployeeAdapter()
+
+    @Provides
+    @Singleton
+    fun provideContext(@ApplicationContext appContext: Context) : Context {
+        return appContext
+    }
+
+    @Singleton
+    @Provides
+    fun providesMainRepository( apiService: ApiService, appContext: Context) : MainRepository {
+        return MainRepository(apiService,appContext)
+    }
 }
