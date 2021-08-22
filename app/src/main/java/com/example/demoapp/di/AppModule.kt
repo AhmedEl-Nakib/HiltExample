@@ -1,10 +1,13 @@
 package com.example.demoapp.di
 
 import android.content.Context
+import androidx.room.Room
 import com.example.demoapp.BuildConfig
 //import com.example.demoapp.api.ApiHelper
 //import com.example.demoapp.api.ApiHelperImpl
 import com.example.demoapp.api.ApiService
+import com.example.demoapp.db.AppDatabase
+import com.example.demoapp.db.UserDao
 import com.example.demoapp.other.Constants
 import com.example.demoapp.repository.MainRepository
 import com.example.demoapp.ui.EmployeeAdapter
@@ -74,7 +77,18 @@ object AppModule{
 
     @Singleton
     @Provides
-    fun providesMainRepository( apiService: ApiService, appContext: Context) : MainRepository {
-        return MainRepository(apiService,appContext)
+    fun providesMainRepository( apiService: ApiService, appContext: Context , appDatabase: AppDatabase) : MainRepository {
+        return MainRepository(apiService,appContext,appDatabase)
+    }
+
+    @Provides
+    fun provideChannelDao(appDatabase: AppDatabase): UserDao {
+        return appDatabase.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(appContext, AppDatabase::class.java, Constants.DBName).build()
     }
 }

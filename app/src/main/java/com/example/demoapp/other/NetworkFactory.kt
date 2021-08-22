@@ -2,6 +2,9 @@ package com.example.demoapp.other
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
+import com.example.demoapp.models.UserResponse
+import retrofit2.Response
 
 open class NetworkFactory(var context: Context) {
 
@@ -11,4 +14,8 @@ open class NetworkFactory(var context: Context) {
         return activeNetwork != null && activeNetwork.isConnected
     }
 
+    fun showApiResult(result: String , raw:String) {
+        Log.i("RESULT_API_RESPONSE",result)
+        Log.i("RESULT_API_LINK",raw)
+    }
 }
