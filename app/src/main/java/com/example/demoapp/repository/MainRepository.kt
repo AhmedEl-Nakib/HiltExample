@@ -15,7 +15,7 @@ class MainRepository @Inject constructor(private val apiService: ApiService, pri
 
     suspend fun getFlowEmployee(): Flow<List<UserResponse>?> {
         return flow {
-            if(isNetworkConnected()) {
+            if(isOnline()) {
                 val result = apiService.fetchPosts()
                 db.userDao().deleteAllDataFromResponse()
                 db.userDao().addResponseToDB(result.body()!!)
